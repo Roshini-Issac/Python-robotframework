@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.0.1 (Python 3.8.10 on win32)" generated="20230912 15:38:19.447" rpa="false" schemaversion="3">
+<suite id="s1" name="TC03 POST call" source="c:\Users\tmro\MERCK\RF Learning\RF_API\Test_Cases\TC03_POST call.robot">
+<test id="s1-t1" name="POST API Validations" line="12">
+<kw name="Add Student Details into the Database" library="PostRequest">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>AddData</arg>
+<arg>${appURL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230912 15:38:21.315" level="INFO">Creating Session using : alias=AddData, url=https://thetestingworldapi.com/, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230912 15:38:21.314" endtime="20230912 15:38:21.347"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{body}</var>
+<arg>first_name=Sampledata</arg>
+<arg>middle_name=Post</arg>
+<arg>last_name=API</arg>
+<arg>date_of_birth=11/09/1967</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230912 15:38:21.349" level="INFO">&amp;{body} = { first_name=Sampledata | middle_name=Post | last_name=API | date_of_birth=11/09/1967 }</msg>
+<status status="PASS" starttime="20230912 15:38:21.348" endtime="20230912 15:38:21.351"/>
+</kw>
+<kw name="Create Directory" library="OperatingSystem">
+<var>&amp;{header}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates the specified directory.</doc>
+<msg timestamp="20230912 15:38:21.388" level="INFO" html="true">Directory '&lt;a href="file://C:\Users\tmro\MERCK\RF Learning\RF_API\Content-Type=application\json"&gt;C:\Users\tmro\MERCK\RF Learning\RF_API\Content-Type=application\json&lt;/a&gt;' already exists.</msg>
+<msg timestamp="20230912 15:38:21.389" level="INFO">&amp;{header} = { }</msg>
+<status status="PASS" starttime="20230912 15:38:21.352" endtime="20230912 15:38:21.389"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${response}</var>
+<arg>AddData</arg>
+<arg>/api/studentsDetails</arg>
+<arg>data=${body}</arg>
+<arg>headers=${header}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230912 15:38:22.875" level="INFO">POST Request : url=https://thetestingworldapi.com/api/studentsDetails 
+ path_url=/api/studentsDetails 
+ headers={'User-Agent': 'python-requests/2.28.2', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '81', 'Content-Type': 'application/x-www-form-urlencoded'} 
+ body=first_name=Sampledata&amp;middle_name=Post&amp;last_name=API&amp;date_of_birth=11%2F09%2F1967 
+ </msg>
+<msg timestamp="20230912 15:38:22.875" level="INFO">POST Response : url=https://thetestingworldapi.com/api/studentsDetails 
+ status=201, reason=Created 
+ headers={'Cache-Control': 'no-cache', 'Pragma': 'no-cache', 'Content-Type': 'application/json; charset=utf-8', 'Expires': '-1', 'Location': 'https://thetestingworldapi.com/api/studentsDetails/7795841', 'Server': 'Microsoft-IIS/10.0', 'X-AspNet-Version': '4.0.30319', 'X-Powered-By': 'ASP.NET', 'X-Powered-By-Plesk': 'PleskWin', 'Date': 'Tue, 12 Sep 2023 10:08:22 GMT', 'Content-Length': '108'} 
+ body={"id":7795841,"first_name":"Sampledata","middle_name":"Post","last_name":"API","date_of_birth":"11/09/1967"} 
+ </msg>
+<msg timestamp="20230912 15:38:22.876" level="INFO">C:\Users\tmro\AppData\Roaming\Python\Python38\site-packages\urllib3\connectionpool.py:1045: InsecureRequestWarning: Unverified HTTPS request is being made to host 'thetestingworldapi.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230912 15:38:22.878" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20230912 15:38:21.390" endtime="20230912 15:38:22.878"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${response}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20230912 15:38:22.880" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20230912 15:38:22.879" endtime="20230912 15:38:22.880"/>
+</kw>
+<status status="PASS" starttime="20230912 15:38:21.314" endtime="20230912 15:38:22.881"/>
+</kw>
+<kw name="Store POST Response as JSON for Data Validation" library="PostRequest">
+<kw name="Set Variable" library="BuiltIn">
+<var>${json_Response}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230912 15:38:22.884" level="INFO">${json_Response} = {'id': 7795841, 'first_name': 'Sampledata', 'middle_name': 'Post', 'last_name': 'API', 'date_of_birth': '11/09/1967'}</msg>
+<status status="PASS" starttime="20230912 15:38:22.883" endtime="20230912 15:38:22.885"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230912 15:38:22.886" level="INFO">201</msg>
+<status status="PASS" starttime="20230912 15:38:22.885" endtime="20230912 15:38:22.886"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>201</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20230912 15:38:22.888" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20230912 15:38:22.887" endtime="20230912 15:38:22.888"/>
+</kw>
+<status status="PASS" starttime="20230912 15:38:22.882" endtime="20230912 15:38:22.888"/>
+</kw>
+<status status="PASS" starttime="20230912 15:38:21.310" endtime="20230912 15:38:22.889"/>
+</test>
+<status status="PASS" starttime="20230912 15:38:19.458" endtime="20230912 15:38:22.891"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC03 POST call">TC03 POST call</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20230912 15:38:21.247" level="ERROR">Error in file 'c:\Users\tmro\MERCK\RF Learning\RF_API\Keywords\PostRequest.robot' on line 5: Error in file 'c:\Users\tmro\MERCK\RF Learning\RF_API\Test_Cases\TC03_POST call.robot' on line 11: Resource file with 'Test Cases' section is invalid.</msg>
+</errors>
+</robot>
